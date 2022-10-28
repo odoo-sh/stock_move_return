@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2022 Sodexis
+    License OPL-1 (See LICENSE file for full copyright and licensing details). -->
+
+<odoo>
+
+    <record id="model_stock_move_action_return_stock_move" model="ir.actions.server">
+        <field name="name">Return Stock Move</field>
+        <field name="model_id" ref="stock.model_stock_move" />
+        <field name="binding_model_id" ref="stock.model_stock_move" />
+        <field name="binding_view_types">form,list</field>
+        <field name="state">code</field>
+        <field name="code">action = records._return_stock_move()</field>
+    </record>
+
+    <record id="model_stock_move_action_return_related_stock_moves" model="ir.actions.server">
+        <field name="name">Return Related Stock Moves</field>
+        <field name="model_id" ref="stock.model_stock_move" />
+        <field name="binding_model_id" ref="stock.model_stock_move" />
+        <field name="binding_view_types">form,list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.with_context(return_related_stock_moves=True)._return_stock_move()</field>
+    </record>
+
+</odoo>
