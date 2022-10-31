@@ -59,13 +59,12 @@ class StockMove(models.Model):
                                              for m in move_dest_to_link]
                     r.write(vals)
                     r._action_confirm()
-                    # To Confirm the Stock Move Created
+                    # To Confirm the Stock Move Created.
                     r._action_assign()
-                    # To assign move_line_ids to the move created
-                    for line in r.move_line_ids:
-                        line.update({
-                            'qty_done': line.product_uom_qty,
-                        })
+                    # To assign move_line_ids to the move created.
+                    r._set_quantities_to_reservation()
+                    # To update the Qty Done in move_line_ids.
+                    # It will not update the Qty if the move has lot_id.
                     r._action_done()
 
             if not returned:
