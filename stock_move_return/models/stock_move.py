@@ -30,7 +30,6 @@ class StockMove(models.Model):
                         'product_uom_qty': return_move.product_qty,
                         'product_uom': return_move.product_id.uom_id.id,
                         'state': 'draft',
-                        'date': fields.Datetime.now(),
                         'location_id': return_move.location_dest_id.id,
                         'location_dest_id': return_move.location_id.id,
                         'origin_returned_move_id': return_move.id,
@@ -66,6 +65,7 @@ class StockMove(models.Model):
                     # To update the Qty Done in move_line_ids.
                     # It will not update the Qty if the move has lot_id.
                     r._action_done()
+                    r.update({'date': return_move.date, })
 
             if not returned:
                 raise UserError(
