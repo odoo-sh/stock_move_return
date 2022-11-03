@@ -65,7 +65,11 @@ class StockMove(models.Model):
                     # To update the Qty Done in move_line_ids.
                     # It will not update the Qty if the move has lot_id.
                     r._action_done()
+                    #Updates the date of the return move and the stock valuation layers date as the original move
                     r.update({'date': return_move.date, })
+                    for svl_id in r.stock_valuation_layer_ids.ids:
+                        self.env.cr.execute("UPDATE  stock_valuation_layer set create_date = '%s' WHERE id=%s" % (
+                            return_move.date, svl_id))
 
             if not returned:
                 raise UserError(
